@@ -90,4 +90,12 @@ siteready-ai/
 
 ---
 
+## Screenshot
+<img width="597" height="692" alt="image" src="https://github.com/user-attachments/assets/28de5f0b-6405-452c-b345-b127817774a4" />
+<img width="597" height="700" alt="image" src="https://github.com/user-attachments/assets/521d8453-e50c-4301-9564-ff6e42fe2fa3" />
+
+
+
+
+
 *SiteReady AI v1.0 — Built for digital marketers who care about launch quality.*
