@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SiteReady AI</title>
+  <link rel="stylesheet" href="popup.css" />
+</head>
+<body>
+  <!-- HEADER -->
+  <header class="header">
+    <div class="header-left">
+      <div class="logo-icon">SR</div>
+      <div>
+        <div class="header-title">SiteReady AI</div>
+        <div class="header-sub">Website Audit &amp; Competitor Tool</div>
+      </div>
+    </div>
+    <div class="header-right">
+      <span id="currentUrl" class="url-badge" title="Current page URL"></span>
+    </div>
+  </header>
+
+  <!-- TABS -->
+  <nav class="tab-bar">
+    <button class="tab-btn active" data-tab="audit">Audit</button>
+    <button class="tab-btn" data-tab="tags">Tags</button>
+    <button class="tab-btn" data-tab="compare">Compare</button>
+    <button class="tab-btn" data-tab="speed">Speed</button>
+    <button class="tab-btn" data-tab="capture">Capture</button>
+    <button class="tab-btn" data-tab="share">Share</button>
+  </nav>
+
+  <!-- MAIN CONTENT -->
+  <main class="content">
+
+    <!-- ===== AUDIT TAB ===== -->
+    <div class="tab-panel active" id="tab-audit">
+      <div class="panel-actions">
+        <button class="btn btn-primary" id="runAuditBtn">
+          <span class="btn-icon">▶</span> Run Audit
+        </button>
+        <div class="score-badge" id="auditScore" style="display:none"></div>
+      </div>
+
+      <div id="auditLoading" class="loading-state" style="display:none">
+        <div class="spinner"></div>
+        <p>Scanning page…</p>
+      </div>
+
+      <div id="auditResults" style="display:none">
+        <!-- Summary Card -->
+        <div class="card card-highlight" id="summaryCard">
+          <div class="card-title">📋 Audit Summary</div>
+          <div id="summaryContent" class="summary-text"></div>
+        </div>
+
+        <!-- Verdict -->
+        <div class="card" id="verdictCard">
+          <div class="card-title">🚀 Launch Readiness</div>
+          <div id="verdictContent"></div>
+        </div>
+
+        <!-- CTA -->
+        <div class="card">
+          <div class="card-title">🎯 CTA Check</div>
+          <div id="ctaResults"></div>
+        </div>
+
+        <!-- Trust Signals -->
+        <div class="card">
+          <div class="card-title">🛡️ Trust Signals</div>
+          <div id="trustResults"></div>
+        </div>
+
+        <!-- Forms -->
+        <div class="card">
+          <div class="card-title">📝 Lead Capture / Forms</div>
+          <div id="formResults"></div>
+        </div>
+
+        <!-- Links -->
+        <div class="card">
+          <div class="card-title">🔗 Links &amp; Redirects</div>
+          <div id="linkResults"></div>
+        </div>
+
+        <!-- Content -->
+        <div class="card">
+          <div class="card-title">📄 Content &amp; Readability</div>
+          <div id="contentResults"></div>
+        </div>
+
+        <!-- Structure -->
+        <div class="card">
+          <div class="card-title">🏗️ Page Structure</div>
+          <div id="structureResults"></div>
+        </div>
+
+        <!-- Mobile -->
+        <div class="card">
+          <div class="card-title">📱 Mobile / Viewport</div>
+          <div id="mobileResults"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== TAGS TAB ===== -->
+    <div class="tab-panel" id="tab-tags">
+      <div class="panel-actions">
+        <button class="btn btn-primary" id="runTagsBtn">
+          <span class="btn-icon">🔍</span> Detect Tags
+        </button>
+      </div>
+
+      <div id="tagsLoading" class="loading-state" style="display:none">
+        <div class="spinner"></div>
+        <p>Scanning marketing tags…</p>
+      </div>
+
+      <div id="tagsResults" style="display:none">
+        <div class="card">
+          <div class="card-title">📊 Marketing Tag Status</div>
+          <div id="tagsList"></div>
+        </div>
+        <div class="card">
+          <div class="card-title">⚠️ Missing Tags</div>
+          <div id="missingTagsList"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== COMPARE TAB ===== -->
+    <div class="tab-panel" id="tab-compare">
+      <div class="compare-input-area">
+        <label class="input-label">Competitor URL</label>
+        <input type="url" id="competitorUrl" class="url-input" placeholder="https://competitor.com/page" />
+        <button class="btn btn-primary" id="runCompareBtn">
+          <span class="btn-icon">⚡</span> Compare Pages
+        </button>
+      </div>
+
+      <div id="compareLoading" class="loading-state" style="display:none">
+        <div class="spinner"></div>
+        <p>Fetching and comparing pages…</p>
+      </div>
+
+      <div id="compareResults" style="display:none">
+        <div class="compare-header-row">
+          <div class="compare-col-label">My Page</div>
+          <div class="compare-col-label">Competitor</div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">📊 Comparison Scorecard</div>
+          <div id="compareTable"></div>
+        </div>
+
+        <div class="card card-win">
+          <div class="card-title">✅ What You Do Better</div>
+          <div id="compareWins"></div>
+        </div>
+
+        <div class="card card-gap">
+          <div class="card-title">❌ What Competitor Does Better</div>
+          <div id="compareGaps"></div>
+        </div>
+
+        <div class="card card-action">
+          <div class="card-title">⚡ Priority Actions</div>
+          <div id="compareActions"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== SPEED TAB ===== -->
+    <div class="tab-panel" id="tab-speed">
+      <div class="panel-actions">
+        <button class="btn btn-primary" id="runSpeedBtn">
+          <span class="btn-icon">⚡</span> Check Speed
+        </button>
+      </div>
+
+      <div id="speedLoading" class="loading-state" style="display:none">
+        <div class="spinner"></div>
+        <p>Checking performance…</p>
+      </div>
+
+      <div id="speedResults" style="display:none">
+        <div class="card">
+          <div class="card-title">🚦 Page Speed Overview</div>
+          <div id="speedOverview"></div>
+        </div>
+        <div class="card">
+          <div class="card-title">🖼️ Asset Issues</div>
+          <div id="speedAssets"></div>
+        </div>
+        <div class="card">
+          <div class="card-title">💡 Quick Wins</div>
+          <div id="speedTips"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== CAPTURE TAB ===== -->
+    <div class="tab-panel" id="tab-capture">
+      <div class="capture-actions">
+        <button class="btn btn-primary" id="captureVisibleBtn">
+          📸 Visible Screenshot
+        </button>
+        <button class="btn btn-secondary" id="captureFullBtn">
+          📄 Full-Page Screenshot
+        </button>
+        <button class="btn btn-secondary" id="captureRecordBtn">
+          🎥 Screen Recording
+        </button>
+      </div>
+
+      <div id="capturePreview" class="capture-preview" style="display:none">
+        <img id="screenshotImg" src="" alt="Screenshot preview" />
+        <div class="capture-toolbar">
+          <button class="btn btn-sm btn-primary" id="downloadScreenshotBtn">⬇ Save</button>
+          <button class="btn btn-sm btn-secondary" id="copyScreenshotBtn">📋 Copy URL</button>
+          <input type="text" id="screenshotNote" class="note-input" placeholder="Add a note…" />
+        </div>
+      </div>
+
+      <div id="recordingState" style="display:none" class="recording-state">
+        <div class="rec-dot"></div>
+        <span>Recording… </span>
+        <button class="btn btn-sm btn-danger" id="stopRecordBtn">⏹ Stop &amp; Save</button>
+      </div>
+
+      <div class="capture-info">
+        <p>Screenshots are saved to your Downloads folder. Screen recording requires tab permission.</p>
+      </div>
+    </div>
+
+    <!-- ===== SHARE TAB ===== -->
+    <div class="tab-panel" id="tab-share">
+      <div class="card">
+        <div class="card-title">📤 Share Audit Report</div>
+        <div class="share-message-box">
+          <textarea id="shareText" class="share-textarea" readonly placeholder="Run an audit first to generate a shareable summary…"></textarea>
+          <button class="btn btn-sm btn-secondary" id="refreshShareBtn">↻ Refresh</button>
+        </div>
+      </div>
+
+      <div class="share-grid">
+        <button class="share-btn share-whatsapp" id="shareWhatsApp">
+          <span class="share-icon">💬</span>
+          <span>WhatsApp</span>
+        </button>
+        <button class="share-btn share-slack" id="shareSlack">
+          <span class="share-icon">🟣</span>
+          <span>Slack</span>
+        </button>
+        <button class="share-btn share-teams" id="shareTeams">
+          <span class="share-icon">🔵</span>
+          <span>Teams</span>
+        </button>
+        <button class="share-btn share-email" id="shareEmail">
+          <span class="share-icon">✉️</span>
+          <span>Email</span>
+        </button>
+        <button class="share-btn share-copy" id="shareCopy">
+          <span class="share-icon">📋</span>
+          <span>Copy</span>
+        </button>
+      </div>
+
+      <div id="shareFeedback" class="share-feedback" style="display:none">✅ Copied to clipboard!</div>
+    </div>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <span>SiteReady AI v1.0</span>
+    <span id="lastRunTime"></span>
+  </footer>
+
+  <script src="popup.js"></script>
+</body>
+</html>

@@ -1,80 +1,93 @@
-# Site Ready AI
+# SiteReady AI — Chrome Extension
 
-Site Ready AI is a website readiness checker that helps users audit a site before running ads or SEO campaigns.
+A professional website launch audit, competitor comparison, and marketing QA tool for digital marketers, freelancers, and agencies.
 
-## What it does
+---
 
-- Checks website hygiene.
-- Reviews tracking tags.
-- Measures basic speed signals.
-- Supports screenshot capture.
-- Supports screen recording for review.
-- Helps confirm if a website is ready for ads and SEO.
+## 📦 Installation (Developer Mode)
 
-## Why this project exists
+1. Open Chrome and go to `chrome://extensions/`
+2. Enable **Developer Mode** (toggle in top-right)
+3. Click **"Load unpacked"**
+4. Select the `siteready-ai` folder
+5. The SiteReady AI icon will appear in your Chrome toolbar
 
-Before launching ads or SEO work, a website should be checked for common issues.  
-Site Ready AI helps users quickly see whether a site is ready or needs improvement.
+### Generate Icons (Optional — Recommended)
+Open `generate_icons.html` in Chrome and click **"Generate & Download All Icons"**. Move the downloaded files into `siteready-ai/icons/` replacing the placeholders.
 
-## Features
+---
 
-- Website audit
-- Tag check
-- Speed check
-- Screenshot capture
-- Screen recording option
-- Ad readiness review
-- SEO readiness review
+## 🚀 How to Use
 
-## Status
+### Audit Tab
+1. Navigate to any website in Chrome
+2. Click the SiteReady AI extension icon
+3. Click **"Run Audit"** to scan the current page
+4. Results appear in sections: CTA, Trust, Forms, Links, Content, Structure, Mobile
 
-This project is ready, but small changes and upgrades are still needed based on feedback.
+### Tags Tab
+- Click **"Detect Tags"** to find GA4, GTM, Meta Pixel, LinkedIn, TikTok, Hotjar, and more
 
-## Tech Stack
+### Compare Tab
+1. Enter a competitor URL
+2. Click **"Compare Pages"**
+3. See side-by-side scorecard, what you do better, and what to fix
 
-- JavaScript
-- HTML
-- CSS
-- Chrome Extension APIs
-- AI-based website checks
+### Speed Tab
+- Click **"Check Speed"** for load time, TTFB, DOM size, and large asset warnings
 
-## Installation
+### Capture Tab
+- **Visible Screenshot** — captures the current viewport
+- **Full-Page Screenshot** — captures and downloads the page
+- **Screen Recording** — records the tab (requires screen share permission)
 
-1. Download or clone this repository.
-2. Open Google Chrome.
-3. Go to chrome://extensions/.
-4. Turn on *Developer mode*.
-5. Click *Load unpacked*.
-6. Select the project folder.
+### Share Tab
+- Audit summary is auto-generated after each scan
+- Share via WhatsApp, Slack, Teams, Email, or copy to clipboard
 
-## How to use
+---
 
-1. Open the extension in Chrome.
-2. Enter or open the website you want to check.
-3. Run the audit.
-4. View tags, speed signals, and website hygiene issues.
-5. Capture screenshots or screen recording if needed.
+## 🏗️ File Structure
 
-## Best for
+```
+siteready-ai/
+├── manifest.json          # MV3 extension manifest
+├── popup.html             # Extension popup UI
+├── popup.css              # Styles (dark navy theme)
+├── popup.js               # Popup controller & logic
+├── contentScript.js       # Page scanner (injected into pages)
+├── background.js          # Service worker (screenshots, fetch)
+├── icons/
+│   ├── icon16.png
+│   ├── icon32.png
+│   ├── icon48.png
+│   └── icon128.png
+├── generate_icons.html    # Icon generator utility
+└── README.md
+```
 
-- Performance marketers
-- SEO teams
-- Website owners
-- Agencies
-- Growth teams
+---
 
-## Future improvements
+## 🔮 Future Upgrades (v1.1+)
+- PDF report export
+- Pre-launch checklist
+- Comparison history & swipe file
+- Full-page scroll screenshot stitching
+- Issue priority labels (High/Med/Low)
+- AI-powered grammar checking
+- Screenshot annotation
+- Cloud screenshot sharing
 
-- Better audit accuracy
-- Faster analysis
-- More detailed SEO checks
-- Better UI/UX
-- More export options
+---
 
-## Screen Shots
-<img width="622" height="745" alt="image" src="https://github.com/user-attachments/assets/03831922-841d-46f0-8687-d240f5b332bd" />
-<img width="590" height="697" alt="image" src="https://github.com/user-attachments/assets/232d81d4-a414-406b-b8d7-c4e87010bc5d" />
-<img width="597" height="697" alt="image" src="https://github.com/user-attachments/assets/ed8ca63c-b345-477b-8d1c-c1e7739f1b65" />
+## 🛠️ Technical Notes
+- Built with **Manifest V3**
+- Uses `chrome.scripting` for content script injection
+- Uses `chrome.tabs.captureVisibleTab` for screenshots
+- Comparison fetches competitor HTML via background service worker
+- All data stored locally via `chrome.storage.local`
+- No external API dependencies required for core features
 
+---
 
-
+*SiteReady AI v1.0 — Built for digital marketers who care about launch quality.*
